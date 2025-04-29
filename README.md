@@ -1,6 +1,6 @@
 # 🏋🏼‍♀️ API REST de StrongTrack
 
-StrongTrack es una API RESTful desarrollada con Node.js, Express y MySQL para gestionar entrenamientos personales. Permite realizar operaciones CRUD (Crear, Leer, Actualizar y Eliminar) sobre registros de entrenamientos, facilitando el seguimiento y la planificación de rutinas de ejercicio.
+StrongTrack es una API REST desarrollada con Node.js, Express y MySQL para gestionar entrenamientos personales. Permite realizar operaciones CRUD (Crear, Leer, Actualizar y Eliminar) sobre registros de entrenamientos, facilitando el seguimiento y la planificación de rutinas de ejercicio.
 
 ## ⚙️ Tecnologías y librerías utilizadas
 - **Backend:**
@@ -57,17 +57,25 @@ La API se ejecutará en `http://localhost:4001`
 ---
 
 ## 📡 Endpoints Disponibles
-🏋️‍♂️ Entrenamientos
+### 🏋️‍♂️ Entrenamientos
 
-Método	Endpoint	Descripción
-GET	/strongtrack/entrenamientos	Obtiene todos los entrenamientos
-GET	/strongtrack/entrenamiento/:id	Obtiene un entrenamiento por ID
-POST /strongtrack/entrenamiento	Crea un nuevo entrenamiento
-PUT	/strongtrack/entrenamiento/:id	Actualiza un entrenamiento existente
-DELETE	/strongtrack/entrenamiento/:id	Elimina un entrenamiento por ID
+GET:	/strongtrack/entrenamientos	
+        Obtiene todos los entrenamientos
+
+GET	:   /strongtrack/entrenamiento/:id	
+        Obtiene un entrenamiento por ID
+
+POST:   /strongtrack/entrenamiento	
+        Crea un nuevo entrenamiento
+
+PUT:	/strongtrack/entrenamiento/:id	
+        Actualiza un entrenamiento existente
+
+DELETE:	/strongtrack/entrenamiento/:id	
+        Elimina un entrenamiento por ID
 
 
-## 👩🏻‍🦳 Usuarios (pendiente de implementar)
+### 👩🏻‍🦳 Usuarios (pendiente de implementar)
 
 
 ---
