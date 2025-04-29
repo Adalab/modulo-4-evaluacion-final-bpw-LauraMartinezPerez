@@ -59,20 +59,15 @@ La API se ejecutará en `http://localhost:4001`
 ## 📡 Endpoints Disponibles
 ### 🏋️‍♂️ Entrenamientos
 
-GET:	/strongtrack/entrenamientos	
-        Obtiene todos los entrenamientos
+GET:	/strongtrack/entrenamientos ---> Obtiene todos los entrenamientos
 
-GET	:   /strongtrack/entrenamiento/:id	
-        Obtiene un entrenamiento por ID
+GET	:   /strongtrack/entrenamiento/:id ---> Obtiene un entrenamiento por ID
 
-POST:   /strongtrack/entrenamiento	
-        Crea un nuevo entrenamiento
+POST:   /strongtrack/entrenamiento ---> Crea un nuevo entrenamiento
 
-PUT:	/strongtrack/entrenamiento/:id	
-        Actualiza un entrenamiento existente
+PUT:	/strongtrack/entrenamiento/:id ---> Actualiza un entrenamiento existente
 
-DELETE:	/strongtrack/entrenamiento/:id	
-        Elimina un entrenamiento por ID
+DELETE:	/strongtrack/entrenamiento/:id ---> Elimina un entrenamiento por ID
 
 
 ### 👩🏻‍🦳 Usuarios (pendiente de implementar)
