@@ -17,11 +17,11 @@ const server = express();
 server.use(cors());
 server.use(express.json({limit: "25mb"})); //para limitar el tamaño
 
-
+//config variables entorno
 require("dotenv").config(); 
 
 //4. Establecemos el puerto de conexion y Arrancamos el servidor en el puerto 
-const serverPort = 4001;
+const serverPort = process.env.PORT;
 server.listen(serverPort, ()=>{
     console.log("server is running on http://localhost:" + serverPort);
 });
@@ -30,8 +30,8 @@ server.listen(serverPort, ()=>{
 async function getDBConnection(){
     const connection = await mysql.createConnection({
         host: "127.0.0.1",
-        user: "root",
-        password: "cucocuco",
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
         database:  "strongtrack_db"
     })
     connection.connect();
