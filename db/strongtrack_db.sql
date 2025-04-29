@@ -33,3 +33,19 @@ VALUES
   ('2025-04-30', 'Piernas', 'Máquina de prensa, Mancuernas', 'Prensa de piernas y sentadillas', 4, 10, '00:01:30', NULL),
   ('2025-05-01', 'Hombros', 'Mancuernas, Máquina de hombros', 'Elevaciones laterales y press militar', 4, 12, '00:01:00', NULL);
 
+SELECT * FROM entrenamientos;
+SELECT * FROM entrenamientos WHERE id = 2;
+
+INSERT INTO entrenamientos (fecha, grupo_muscular, equipamiento, descripcion, series, repeticiones, tiempo_descanso, fk_usuario)
+VALUES
+  ('2025-05-02', 'Brazos', 'Mancuernas', 'Curl de bíceps con mancuernas', 4, 12, '00:00:45', NULL);
+  
+UPDATE entrenamientos
+SET fecha = '2025-05-03',
+    grupo_muscular = 'Glúteo',
+    equipamiento = 'Banco, Barra',
+    descripcion = 'Hip thrust con barra',
+    tiempo_descanso = '00:01:00'
+WHERE id = 6;
+
+DELETE FROM entrenamientos WHERE id = 7;

@@ -17,6 +17,7 @@ const server = express();
 server.use(cors());
 server.use(express.json({limit: "25mb"})); //para limitar el tamaño
 
+
 require("dotenv").config(); 
 
 //4. Establecemos el puerto de conexion y Arrancamos el servidor en el puerto 
@@ -37,17 +38,6 @@ async function getDBConnection(){
     return connection;
 }
 
-//Probar conexion DB
-/* server.get('/test-db', async (req, res) => {
-    try {
-      const conn = await getDBConnection();
-      await conn.query('SELECT 1'); // consulta dummy para testear conexión
-      conn.end();
-      res.json({ success: true, message: 'Conexión a la base de datos OK' });
-    } catch (err) {
-      res.status(500).json({ success: false, message: 'Error de conexión a la base de datos', error: err.message });
-    }
-  }); */
 
 //6. ENDPOINTS
 server.get("/strongtrack/entrenamientos", async (req, res) => {
