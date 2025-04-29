@@ -63,58 +63,106 @@ server.get("/strongtrack/entrenamiento/:id", async (req, res) => {
     const sqlQuery = "SELECT * FROM entrenamientos WHERE id = ?";
     const [entrenamientoResult] = await connection.query(sqlQuery, [id]);
     connection.end();
-
-    res.status(200).json({
-        status: "seccess",
-        result: entrenamientoResult
-    });
-
+console.log(entrenamientoResult);
+       if (entrenamientoResult.length === 0) {
+        res.status(404).json({
+            success: false,
+            message: "Entrenamiento not found"
+        });
+       } else {
+            res.status(200).json({
+                status: "seccess",
+                result: entrenamientoResult
+        });
+       }
 }) 
 
 server.post("/strongtrack/entrenamiento", async (req, res) => {
-  const connection = await getDBConnection();
-  const { fecha, grupo_muscular, equipamiento, descripcion, series, repeticiones, tiempo_descanso, fk_usuario } = req.body;
+    const connection = await getDBConnection();
+  
+    let fecha, grupo_muscular, equipamiento, descripcion, series, repeticiones, tiempo_descanso, fk_usuario;
+  
+    if (!req.body) {
+      res.status(404).json({
+        success: false,
+        message: "Proveide the params"
+      });
 
-  if (!fecha || !grupo_muscular || !equipamiento || !descripcion || !series || !repeticiones || !tiempo_descanso || !fk_usuario) {
-    return res.status(400).json({
-      success: false,
-      message: "Bad params. Provide all params"
+    } else {
+      ({ fecha, grupo_muscular, equipamiento, descripcion, series, repeticiones, tiempo_descanso, fk_usuario } = req.body);
+    }
+  
+    if (!fecha || !grupo_muscular || !equipamiento || !descripcion || !series || !repeticiones || !tiempo_descanso || !fk_usuario) {
+      return res.status(400).json({
+        success: false,
+        message: "Bad params. Provide all params"
+      });
+    }
+  
+    const sqlQuery = "INSERT INTO entrenamientos (fecha, grupo_muscular, equipamiento, descripcion, series, repeticiones, tiempo_descanso, fk_usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    const [entrenamientoResult] = await connection.query(sqlQuery, [
+      fecha,
+      grupo_muscular,
+      equipamiento,
+      descripcion,
+      series,
+      repeticiones,
+      tiempo_descanso,
+      fk_usuario
+    ]);
+    connection.end();
+  
+    res.status(201).json({
+      success: true,
+      id: entrenamientoResult.insertId
     });
-  }
-
-  const sqlQuery = "INSERT INTO entrenamientos (fecha, grupo_muscular, equipamiento, descripcion, series, repeticiones, tiempo_descanso, fk_usuario) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-  const [entrenamientoResult] = await connection.query(sqlQuery, [
-    fecha,
-    grupo_muscular,
-    equipamiento,
-    descripcion,
-    series,
-    repeticiones,
-    tiempo_descanso,
-    fk_usuario
-  ]);
-  connection.end();
-
-  res.status(201).json({
-    success: true,
-    id: entrenamientoResult.insertId
   });
-});
+  
 
 server.put("/strongtrack/entrenamiento/:id", async (req, res) => {
 
     const connection = await getDBConnection();
-    const {id} = req.params;
-    const {fecha, grupo_muscular, equipamiento, descripcion, series, repeticiones, tiempo_descanso, fk_usuario} = req.body; 
+    let { id } = req.params;
+    let fecha, grupo_muscular, equipamiento, descripcion, series, repeticiones, tiempo_descanso, fk_usuario;
+
+    if (!req.body) {
+        res.status(404).json({
+          success: false,
+          message: "Proveide the params"
+        });
+  
+      } else {
+        ({ id } = req.params);
+        ({ fecha, grupo_muscular, equipamiento, descripcion, series, repeticiones, tiempo_descanso, fk_usuario } = req.body);
+      }
+
+      if (!fecha || !grupo_muscular || !equipamiento || !descripcion || !series || !repeticiones || !tiempo_descanso) {
+        return res.status(400).json({
+          success: false,
+          message: "Bad params. Provide all params"
+        });
+      }
+
     const sqlQuery = "UPDATE entrenamientos SET fecha = ?, grupo_muscular = ?, equipamiento = ?, descripcion = ?, series = ?, repeticiones = ?, tiempo_descanso = ? WHERE id = ?";
     const [entrenamientoResult] = await connection.query(sqlQuery, [fecha, grupo_muscular, equipamiento, descripcion, series, repeticiones, tiempo_descanso, id]);
    
     connection.end();
+    console.log("ID recibido:", id);
+    console.log("Resultado de la actualización:", entrenamientoResult);
 
-    res.status(200).json({
+
+    if (entrenamientoResult.affectedRows === 0) {
+        return res.status(404).json({
+          success: false,
+          message: "Entrenamiento not found"
+        });
+      }
+    
+      res.status(200).json({
         success: true,
-        id: entrenamientoResult.insertId
-    });
+        message: "Entrenamiento updated successfully",
+        id
+      });
 
 })
 
@@ -127,10 +175,19 @@ server.delete("/strongtrack/entrenamiento/:id", async (req, res) => {
 
     connection.end();
 
-    res.status(200).json({
-        status: "success",
-        message: "Removed resource"
-    });
+    if (entrenamientoResult.affectedRows === 0) {
+        return res.status(404).json({
+          success: false,
+          message: "Entrenamiento not found"
+        });
+      }
+    
+      res.status(200).json({
+        success: true,
+        message: "Entrenamiento delete successfully",
+        id
+      });
+
 
 })
 
